@@ -4,8 +4,8 @@ import { AuthContext } from '../../contexts/AuthProvider';
 
 const About = () => {
     const { user } = useContext(AuthContext);
-    const email = user.email;
-    const url = `http://localhost:5000/users?email=${email}`
+    const userEmail = user?.email;
+    const url = `http://localhost:5000/users?email=${userEmail}`
 
     const { isLoading, error, refetch, data } = useQuery({
         queryKey: ['user'],
@@ -20,10 +20,37 @@ const About = () => {
     if (isLoading) return 'Loading...'
     if (error) return 'An error has occurred: ' + error.message
 
-    const { name, userEmail } = data[0];
+    const { name, email, university, address } = data[0];
+
     return (
-        <div>
-            {name}
+        <div className="w-full max-w-xl mx-auto border rounded-lg">
+            <div className='flex justify-end'>
+                <button className="btn btn-ghost btn-sm">Edit</button>
+            </div>
+            <table className="table w-full">
+                <tbody>
+
+                    <tr>
+                        <th>Name</th>
+                        <td>{name}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Email</th>
+                        <td>{email}</td>
+                    </tr>
+
+                    <tr>
+                        <th>University</th>
+                        <td>{university}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Address</th>
+                        <td>{address}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     );
 };
