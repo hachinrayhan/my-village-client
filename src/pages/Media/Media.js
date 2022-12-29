@@ -8,11 +8,7 @@ const Media = () => {
     const { isLoading, error, refetch, data: posts } = useQuery({
         queryKey: ['posts'],
         queryFn: () =>
-            fetch(url, {
-                headers: {
-                    authorization: `bearer ${localStorage.getItem('token')}`
-                }
-            }).then(res => res.json())
+            fetch(url).then(res => res.json())
     })
 
     if (isLoading) return 'Loading...'

@@ -23,10 +23,12 @@ const About = () => {
     const { name, email, university, address } = data[0];
 
     return (
-        <div className="w-full max-w-xl mx-auto border rounded-lg">
-            <div className='flex justify-end'>
-                <button className="btn btn-ghost btn-sm">Edit</button>
+        <div className="w-full max-w-xl mx-auto border rounded-lg my-20">
+            <div className='flex justify-between'>
+                <h2 className='text-xl font-bold px-4'>About Me</h2>
+                <button className="btn btn-outline btn-primary btn-sm">Edit</button>
             </div>
+            <hr />
             <table className="table w-full">
                 <tbody>
 

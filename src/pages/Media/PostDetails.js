@@ -1,8 +1,25 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { FaUser } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-const Post = ({ post }) => {
+const PostDetails = () => {
+    const { id } = useParams();
+    const url = `http://localhost:5000/posts/${id}`;
+
+    const { isLoading, error, refetch, data: post } = useQuery({
+        queryKey: ['post'],
+        queryFn: () =>
+            fetch(url, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('token')}`
+                }
+            }).then(res => res.json())
+    })
+
+    if (isLoading) return 'Loading...'
+    if (error) return 'An error has occurred: ' + error.message
+
     const { _id, text, photo, name, userPhoto } = post;
     return (
         <div className="card w-full max-w-lg mx-auto bg-base-100 shadow-2xl my-12">
@@ -21,12 +38,11 @@ const Post = ({ post }) => {
                         {/* <div className="text-sm opacity-50">United States</div> */}
                     </div>
                 </div>
-                <p>{text.length > 100 ? text.slice(0, 99) + '...' : text}</p>
+                <p>{text}</p>
             </div>
             <figure><img src={photo} alt="" /></figure>
-            <Link to={`/posts/${_id}`} className="btn-primary">Details</Link>
         </div>
     );
 };
 
-export default Post;
+export default PostDetails;
