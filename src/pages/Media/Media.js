@@ -3,7 +3,7 @@ import React from 'react';
 import Post from './Post';
 
 const Media = () => {
-    const url = `http://localhost:5000/posts`;
+    const url = `https://my-village-server-hachinrayhan.vercel.app/posts`;
 
     const { isLoading, error, refetch, data: posts } = useQuery({
         queryKey: ['posts'],

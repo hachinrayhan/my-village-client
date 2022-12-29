@@ -33,7 +33,7 @@ const CreatePostModal = () => {
                     }
 
                     //save post to the database
-                    fetch('http://localhost:5000/posts', {
+                    fetch('https://my-village-server-hachinrayhan.vercel.app/posts', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts/AuthProvider';
 const About = () => {
     const { user } = useContext(AuthContext);
     const userEmail = user?.email;
-    const url = `http://localhost:5000/users?email=${userEmail}`
+    const url = `https://my-village-server-hachinrayhan.vercel.app/users?email=${userEmail}`
 
     const { isLoading, error, refetch, data } = useQuery({
         queryKey: ['user'],
