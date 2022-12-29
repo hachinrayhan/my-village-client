@@ -25,7 +25,9 @@ const CreatePostModal = () => {
                 if (imgData.success) {
                     console.log(imgData.data.url);
                     const post = {
-                        user: user.email,
+                        email: user.email,
+                        userPhoto: user.photoURL,
+                        name: user.displayName,
                         text: data.text,
                         photo: imgData.data.url
                     }
@@ -61,7 +63,7 @@ const CreatePostModal = () => {
                         <label className="label">
                             <span className="label-text">Add Photo</span>
                         </label>
-                        <input {...register("photo", { required: true })} type="file" className="file-input file-input-bordered w-full" />
+                        <input {...register("photo")} type="file" className="file-input file-input-bordered w-full" required />
                         <button disabled={!isDirty || !isValid} type="submit" className='my-4 btn btn-primary w-full'>Post</button>
                     </form>
                 </div>

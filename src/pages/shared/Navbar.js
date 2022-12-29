@@ -15,10 +15,11 @@ const Navbar = () => {
     }
 
     const navItems = <>
-        <li><Link>Media</Link></li>
+        <li><Link to={'/'}>Home</Link></li>
+        <li><Link to={'/media'}>Media</Link></li>
         <li><Link>Message</Link></li>
         <li><Link>My Posts</Link></li>
-        <li><Link>About</Link></li>
+        <li><Link to={'about'}>About</Link></li>
         {
             user?.uid ?
                 <li><button onClick={handleSignOut}>SignOut</button></li>
