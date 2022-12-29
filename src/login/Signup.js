@@ -3,41 +3,20 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthProvider';
-// import useToken from '../../hooks/useToken';
+import useToken from '../hooks/useToken';
 
 const Signup = () => {
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, createUserWithGoogle, updateUser } = useContext(AuthContext);
     const [error, setError] = useState('');
     const { register, handleSubmit, formState: { errors } } = useForm();
-    // const [userEmail, setUserEmail] = useState('');
-    // const [token] = useToken(userEmail);
+    const [userEmail, setUserEmail] = useState('');
+    const [token] = useToken(userEmail);
     const navigate = useNavigate();
 
 
-    // if (token) {
-    //     navigate('/');
-    // }
-
-    const handleSignup = (data, e) => {
-        setError('');
-        createUser(data.email, data.password)
-            .then(result => {
-                const user = result.user;
-                updateUser({ displayName: data.name })
-                    .then(() => {
-                        saveUser(data.name, data.email);
-                    })
-                    .catch(err => console.log(err))
-                console.log(user);
-                toast.success('SignUp Successful');
-                e.target.reset();
-                navigate('/');
-            })
-            .catch(err => {
-                console.log(err);
-                setError(err.message);
-            })
-    };
+    if (token) {
+        navigate('/');
+    }
 
     const saveUser = (name, email) => {
         const user = { name, email };
@@ -51,14 +30,49 @@ const Signup = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                // setUserEmail(email);
+                setUserEmail(email);
             })
     };
+
+    const handleSignup = data => {
+        setError('');
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                updateUser({ displayName: data.name })
+                    .then(() => {
+                        saveUser(data.name, data.email);
+                    })
+                    .catch(err => console.log(err))
+                console.log(user);
+                toast.success('SignUp Successful');
+            })
+            .catch(err => {
+                console.log(err);
+                setError(err.message);
+            })
+    };
+
+    const handleGoogleLogin = () => {
+        setError('');
+        createUserWithGoogle()
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                saveUser(user.displayName, user.email);
+                toast.success('SignUp Successful');
+            })
+            .catch(err => {
+                console.log(err)
+                setError(err.message);
+            })
+    }
 
     return (
         <div className='w-full max-w-sm mx-auto shadow-xl p-8 rounded-md'>
             <h2 className='text-xl'>Sign Up</h2>
             <form onSubmit={handleSubmit(handleSignup)} className='form-control'>
+
                 {/* Name */}
                 <label className="label">
                     <span className="label-text">Name</span>
@@ -83,10 +97,10 @@ const Signup = () => {
                 {/* Submit button */}
                 {error && <p className='text-red-700'>{error}</p>}
                 <input type="submit" value="Sign Up" className='btn btn-accent w-full max-w-sm mt-5' />
-                <p>Already have an account? <Link to={'/login'} className="text-secondary">Login</Link></p>
+                <p>Already have an account? <Link to={'/login'} className="text-primary">Login</Link></p>
                 <div className="divider">OR</div>
             </form>
-            <button className="btn btn-outline w-full max-w-sm">SignUp With Google</button>
+            <button onClick={handleGoogleLogin} className="btn btn-outline w-full max-w-sm">SignUp With Google</button>
         </div>
     );
 };

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
 import { FaUser } from 'react-icons/fa';
 import CreatePostModal from './CreatePostModal';
+import { Link } from 'react-router-dom';
 
 const CreatePost = () => {
     const { user } = useContext(AuthContext);
@@ -14,7 +15,10 @@ const CreatePost = () => {
                     }
                 </div>
             </div>
-            <label htmlFor="my-modal" className="input input-bordered rounded-full w-full max-w-sm">{`What's on your mind, ${user?.displayName}?`}</label>
+            {
+                user?.uid ? <label htmlFor="my-modal" className="input input-bordered rounded-full w-full max-w-sm">{`What's on your mind, ${user?.displayName}?`}</label>
+                    : <label className="input input-bordered rounded-full w-full max-w-sm"><Link to={'/login'} className='text-primary font-bold'>Login</Link> to share your thoughts with friends. </label>
+            }
             <CreatePostModal></CreatePostModal>
         </div>
     );
