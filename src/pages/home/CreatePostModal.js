@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const CreatePostModal = () => {
+    const { user } = useContext(AuthContext);
     const { register, handleSubmit, formState: { isDirty, isValid } } = useForm({ mode: "onChange" });
     const imgHostKey = process.env.REACT_APP_imgbb_key;
 
@@ -12,8 +14,8 @@ const CreatePostModal = () => {
         //photo hosting system to imgbb
         const photo = data.photo[0];
         const formData = new FormData();
-        formData.append('photo', photo);
-        const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`
+        formData.append('image', photo);
+        const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`;
         fetch(url, {
             method: 'POST',
             body: formData
@@ -23,6 +25,7 @@ const CreatePostModal = () => {
                 if (imgData.success) {
                     console.log(imgData.data.url);
                     const post = {
+                        user: user.email,
                         text: data.text,
                         photo: imgData.data.url
                     }
