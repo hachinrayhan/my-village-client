@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const CreatePost = () => {
     const { user } = useContext(AuthContext);
     return (
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center my-10'>
             <div className="avatar">
                 <div className="w-12 rounded-full ring mr-3">
                     {

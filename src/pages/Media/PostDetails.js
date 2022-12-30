@@ -8,10 +8,10 @@ import { useParams } from 'react-router-dom';
 
 const PostDetails = () => {
     const { id } = useParams();
-    const url = `http://localhost:5000/posts/${id}`;
+    const url = `https://my-village-server-hachinrayhan.vercel.app/posts/${id}`;
     const [isLiked, setIsLiked] = useState(false);
 
-    const { isLoading, error, refetch, data: post } = useQuery({
+    const { isLoading, error, data: post } = useQuery({
         queryKey: ['post'],
         queryFn: () =>
             fetch(url, {
@@ -24,7 +24,7 @@ const PostDetails = () => {
     if (isLoading) return 'Loading...'
     if (error) return 'An error has occurred: ' + error.message
 
-    const { _id, text, photo, name, userPhoto, likers, comments } = post;
+    const { text, photo, name, userPhoto, likers, comments } = post;
 
     const handleLike = () => {
         setIsLiked(!isLiked);

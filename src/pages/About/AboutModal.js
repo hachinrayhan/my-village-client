@@ -10,7 +10,7 @@ const AboutModal = ({ user, refetch }) => {
 
     const updateInfo = data => {
         console.log(data);
-        fetch(`http://localhost:5000/users/${_id}`, {
+        fetch(`https://my-village-server-hachinrayhan.vercel.app/users/${_id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
