@@ -29,7 +29,9 @@ const CreatePostModal = () => {
                         userPhoto: user.photoURL,
                         name: user.displayName,
                         text: data.text,
-                        photo: imgData.data.url
+                        photo: imgData.data.url,
+                        likers: [],
+                        comments: []
                     }
 
                     //save post to the database

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthProvider';
+import AboutModal from './AboutModal';
 
 const About = () => {
     const { user } = useContext(AuthContext);
@@ -20,13 +21,14 @@ const About = () => {
     if (isLoading) return 'Loading...'
     if (error) return 'An error has occurred: ' + error.message
 
-    const { name, email, university, address } = data[0];
+    const { name, email, institution, address } = data[0];
 
     return (
         <div className="w-full max-w-xl mx-auto border rounded-lg my-20">
             <div className='flex justify-between'>
                 <h2 className='text-xl font-bold px-4'>About Me</h2>
-                <button className="btn btn-outline btn-primary btn-sm">Edit</button>
+                {/* <button className="btn btn-outline btn-primary btn-sm">Edit</button> */}
+                <label htmlFor="about-modal" className="btn btn-outline btn-primary btn-sm">Edit</label>
             </div>
             <hr />
             <table className="table w-full">
@@ -43,8 +45,8 @@ const About = () => {
                     </tr>
 
                     <tr>
-                        <th>University</th>
-                        <td>{university}</td>
+                        <th>Institution</th>
+                        <td>{institution}</td>
                     </tr>
 
                     <tr>
@@ -53,6 +55,7 @@ const About = () => {
                     </tr>
                 </tbody>
             </table>
+            <AboutModal user={data} refetch={refetch}></AboutModal>
         </div>
     );
 };
